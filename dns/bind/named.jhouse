@@ -1,0 +1,20 @@
+$TTL 1D
+@       IN SOA  @ rname.invalid. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      @
+        A       127.0.0.1
+        AAAA    ::1
+ldap    A       10.64.160.196
+client  A       10.64.160.207
+ws1     A       172.17.42.20
+ws2     A       172.17.42.20
+jboss1  A       172.17.42.21
+jboss2  A       172.17.42.22
+jboss3  A       172.17.42.23
+jboss4  A       172.17.42.24
+mylap   A       172.17.42.1
+

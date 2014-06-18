@@ -1,0 +1,16 @@
+zone "jhouse.co.kr" IN {
+        type master;
+        file "named.jhouse";
+};
+
+
+zone "160.64.10.in-addr.arpa" IN {
+        type master;
+        file "10.64.160.net";
+};
+
+zone "42.17.172.in-addr.arpa" IN {
+        type master;
+        file "172.17.42.net";
+};
+

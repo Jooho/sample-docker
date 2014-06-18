@@ -1,0 +1,7 @@
+ #Local IP
+ export IP=$(ifconfig eth0|grep -w inet|awk '{print $2}'|cut -d: -f2)
+ export MASTER_IP=jboss1.jhouse.co.kr
+
+ #Change home folder
+cd /home/wildfly-8.1.0.CR2
+

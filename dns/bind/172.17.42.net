@@ -1,0 +1,19 @@
+$TTL 1D
+@       IN SOA  @ rname.invalid. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      @
+        A       127.0.0.1
+        AAAA    ::1
+        PTR     localhost.
+20      PTR     ws1
+20      PTR     ws2
+21      PTR     jboss1
+22      PTR     jboss2
+23      PTR     jboss3
+24      PTR     jboss4
+1       PTR     mylap
+

@@ -1,0 +1,6 @@
+ #Local IP
+ export IP=$(ifconfig eth0|grep -w inet|awk '{print $2}'|cut -d: -f2)
+
+ #Change home folder
+cd /var/named
+
