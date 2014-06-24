@@ -36,10 +36,11 @@ do
           fi
 done
 
-#--dns=["$DNS","10.64.255.25"] \
+## https://github.com/dotcloud/docker/issues/5857
+#  it is not compatible using -h and --net togather from docker version 1.0.0
 docker run \
 --name="$HOST_NAME" \
--i -t -h="$HOST_NAME" \
+-i -t  \
 -P \
 --net="none"  \
 --lxc-conf="lxc.network.type=veth" \
