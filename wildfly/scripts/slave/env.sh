@@ -3,22 +3,24 @@
 DATE=`date +%Y%m%d%H%M%S`
 
 ##### JBOSS Directory Setup #####
-export JBOSS_HOME=/home/jboss-eap-6.2
-export DOMAIN_BASE=/home/jboss-eap-6.2
-export SERVER_NAME=standalone
+export JBOSS_HOME=/home/wildfly-8.1.0.CR2
+export DOMAIN_BASE=/home/wildfly-8.1.0.CR2
+export SERVER_NAME=domain
 
+
+export DOMAIN_BASE_DIR=$DOMAIN_BASE/$SERVER_NAME
 
 ##### Configration File #####
-#export CONFIG_FILE=standalone-full-ha.xml
-export CONFIG_FILE=standalone-ha.xml
+export DOMAIN_CONFIG_FILE=domain.xml
+export HOST_CONFIG_FILE=host-slave.xml
 
-export HOST_NAME="$(hostname)"
+export HOST_NAME=slave
 export NODE_NAME="$(hostname)"
-export PORT_OFFSET=0
 
-export JBOSS_USER=jjeon
+export JBOSS_USER=root
 
 ##### Bind Address #####
+#export BIND_ADDR=0.0.0.0
 export BIND_ADDR=$IP
 
 export MULTICAST_ADDR=230.1.0.1
@@ -26,12 +28,12 @@ export JMS_MULTICAST_ADDR=231.7.0.1
 export MODCLUSTER_MULTICAST_ADDR=224.0.1.105
 
 export MGMT_ADDR=$IP
+export DOMAIN_MASTER_ADDR=$MASTER_IP
+export DOMAIN_MASTER_PORT=9999
 
-export CONTROLLER_IP=$MGMT_ADDR
-let CONTROLLER_PORT=9999+$PORT_OFFSET
-export CONTROLLER_PORT
+export HOST_CONTROLLER_PORT=9999
 
-export LAUNCH_JBOSS_IN_BACKGROUND=true
+export LAUNCH_JBOSS_IN_BACKGROUND=false
 
 ##### JBoss System module and User module directory #####
 export JBOSS_MODULEPATH=$JBOSS_HOME/modules:$JBOSS_HOME/modules.ext
@@ -40,7 +42,7 @@ export JBOSS_MODULEPATH=$JBOSS_HOME/modules:$JBOSS_HOME/modules.ext
 export JAVA_OPTS="-server $JAVA_OPTS"
 
 # JVM Options : Memory 
-export JAVA_OPTS=" $JAVA_OPTS -Xms64m -Xmx512m -XX:MaxPermSize=256m"
+export JAVA_OPTS=" $JAVA_OPTS -Xms64m -Xmx128m -XX:MaxPermSize=256m -Xss256k"
 
 export JAVA_OPTS=" $JAVA_OPTS -XX:+PrintGCTimeStamps "
 export JAVA_OPTS=" $JAVA_OPTS -XX:+PrintGCDetails "
@@ -61,29 +63,30 @@ export JAVA_OPTS=" $JAVA_OPTS -Dsun.rmi.dgc.server.gcInterval=3600000"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.modules.system.pkgs=org.jboss.byteman"
 export JAVA_OPTS=" $JAVA_OPTS -Djava.awt.headless=true"
 
-export JAVA_OPTS=" $JAVA_OPTS -Djboss.server.base.dir=$DOMAIN_BASE/$SERVER_NAME"
-export JAVA_OPTS=" $JAVA_OPTS -Djboss.socket.binding.port-offset=$PORT_OFFSET"
+export JAVA_OPTS=" $JAVA_OPTS -Djboss.domain.default.config=$DOMAIN_CONFIG_FILE"
+export JAVA_OPTS=" $JAVA_OPTS -Djboss.host.default.config=$HOST_CONFIG_FILE"
+export JAVA_OPTS=" $JAVA_OPTS -Djboss.domain.base.dir=$DOMAIN_BASE_DIR"
+export JAVA_OPTS=" $JAVA_OPTS -Djboss.domain.master.address=$DOMAIN_MASTER_ADDR"
+export JAVA_OPTS=" $JAVA_OPTS -Djboss.domain.master.port=$DOMAIN_MASTER_PORT"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.node.name=$NODE_NAME"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.bind.address.management=$MGMT_ADDR"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.bind.address=$BIND_ADDR"
-#export JAVA_OPTS=" $JAVA_OPTS -Djboss.bind_addr=$MULTICAST_ADDR"
-#export JAVA_OPTS=" $JAVA_OPTS -Djboss.default.jgroups.stack=tcp"
+export JAVA_OPTS=" $JAVA_OPTS -Djboss.management.native.port=$HOST_CONTROLLER_PORT"
+#export JAVA_OPTS=" $JAVA_OPTS -Djava.nio.channels.spi.SelectorProvider=sun.nio.ch.KQueueSelectorProvider"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.default.multicast.address=$MULTICAST_ADDR"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.messaging.group.address=$JMS_MULTICAST_ADDR"
 export JAVA_OPTS=" $JAVA_OPTS -Djboss.modcluster.multicast.address=$MODCLUSTER_MULTICAST_ADDR"
-
-export JAVA_OPTS=" $JAVA_OPTS -Dserver.mode=local"
+#export JAVA_OPTS=" $JAVA_OPTS -Djboss.default.jgroups.stack=tcp"
 
 # Use log4j in application
-export JAVA_OPTS=" $JAVA_OPTS -Dorg.jboss.as.logging.per-deployment=false "
+#export JAVA_OPTS=" $JAVA_OPTS -Dorg.jboss.as.logging.per-deployment=false "
+
 
 echo "================================================"
 echo "JBOSS_HOME=$JBOSS_HOME"
 echo "DOMAIN_BASE=$DOMAIN_BASE"
 echo "SERVER_NAME=$SERVER_NAME"
-echo "CONFIG_FILE=$CONFIG_FILE"
-echo "BIND_ADDR=$BIND_ADDR"
-echo "PORT_OFFSET=$PORT_OFFSET"
-echo "MULTICAST_ADDR=$MULTICAST_ADDR"
-echo "CONTROLLER=$CONTROLLER_IP:$CONTROLLER_PORT"
+echo "DOMAIN_CONFIG_FILE=$DOMAIN_CONFIG_FILE"
+echo "HOST_CONFIG_FILE=$HOST_CONFIG_FILE"
+echo "DOMAIN_CONTROLLER=$DOMAIN_MASTER_ADDR:$DOMAIN_MASTER_PORT"
 echo "================================================"

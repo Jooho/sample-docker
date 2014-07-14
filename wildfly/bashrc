@@ -3,5 +3,5 @@
  export MASTER_IP=jboss1.jhouse.co.kr
 
  #Change home folder
-cd /home/jboss-eap-6.2
+cd /home/wildfly-8.1.0.CR2
 
