@@ -1,0 +1,15 @@
+# Load mod_jk module 
+LoadModule jk_module modules/mod_jk.so 
+# Where to find workers.properties 
+JkWorkersFile conf.d/workers.properties
+# Where to put jk logs
+JkLogFile logs/mod_jk.log
+JkShmFile logs/mod_jk.shm
+# Set the jk log level [debug/error/info]
+JkLogLevel info
+# Select the log format
+JkLogStampFormat "[%a %b %d %H:%M:%S %Y] "
+# JkOptions indicate to send SSL KEY SIZE,
+JkOptions +ForwardKeySize +ForwardURICompat -ForwardDirectories +ForwardURICompatUnparsed
+# JkRequestLogFormat set the request format
+JkRequestLogFormat "%w %V %T“
