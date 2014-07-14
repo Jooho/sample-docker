@@ -38,10 +38,9 @@ done
 
 docker run \
 --name="$HOST_NAME" \
--p 22 \
--i -t -h="$HOST_NAME" \
 --dns="$DNS" \
--net=none \
+-i -t --hostname="$HOST_NAME" \
+-P \
 --lxc-conf="lxc.network.type=veth" \
 --lxc-conf="lxc.network.ipv4=${IP}/24" \
 --lxc-conf="lxc.network.ipv4.gateway=172.17.42.1" \
