@@ -1,5 +1,5 @@
-export HOST_NAME="jboss1"
+export HOST_NAME="wildfly1"
 export IP="172.17.42.21"
-export IMAGE='docker-registry:5000/centos65-base:wildfly'
+export IMAGE='ljhiyh/centos65:wildfly'
 export DNS='172.17.42.100'
 

@@ -3,8 +3,8 @@
 DATE=`date +%Y%m%d%H%M%S`
 
 ##### JBOSS Directory Setup #####
-export JBOSS_HOME=/home/wildfly-8.1.0.CR2
-export DOMAIN_BASE=/home/wildfly-8.1.0.CR2
+export JBOSS_HOME=/home/wildfly-8.1.0.Final
+export DOMAIN_BASE=/home/wildfly-8.1.0.Final
 export SERVER_NAME=standalone
 
 
@@ -16,7 +16,7 @@ export HOST_NAME="$(hostname)"
 export NODE_NAME="$(hostname)"
 export PORT_OFFSET=0
 
-export JBOSS_USER=jjeon
+export JBOSS_USER=root
 
 ##### Bind Address #####
 export BIND_ADDR=$IP

@@ -3,8 +3,8 @@
 DATE=`date +%Y%m%d%H%M%S`
 
 ##### JBOSS Directory Setup #####
-export JBOSS_HOME=/home/wildfly-8.1.0.CR2
-export DOMAIN_BASE=/home/wildfly-8.1.0.CR2
+export JBOSS_HOME=/home/wildfly-8.1.0.Final
+export DOMAIN_BASE=/home/wildfly-8.1.0.Final
 export SERVER_NAME=domain
 
 export DOMAIN_BASE_DIR=$DOMAIN_BASE/$SERVER_NAME
