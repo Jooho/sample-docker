@@ -1,2 +1,3 @@
 *.log
 wildfly*.zip
+*.swp
