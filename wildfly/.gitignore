@@ -1,4 +1,4 @@
 *.log
 wildfly*.zip
-**/*.swp
-**/*.tar
+*swp
+*.tar
