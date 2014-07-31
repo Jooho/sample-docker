@@ -11,9 +11,15 @@ $TTL 1D
         PTR     localhost.
 20      PTR     ws1
 20      PTR     ws2
-21      PTR     jboss1
-22      PTR     jboss2
-23      PTR     jboss3
-24      PTR     jboss4
+21      PTR     wildfly1
+22      PTR     wildfly2
+23      PTR     wildfly3
+24      PTR     wildfly4
+41      PTR     mysql1
+42      PTR     mysql2
+43      PTR     mysql3
+51      PTR     postgresql1
+52      PTR     postgresql2
+53      PTR     postgresql3
 1       PTR     mylap
 

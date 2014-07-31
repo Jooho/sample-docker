@@ -12,9 +12,14 @@ ldap    A       10.64.160.196
 client  A       10.64.160.207
 ws1     A       172.17.42.20
 ws2     A       172.17.42.20
-jboss1  A       172.17.42.21
-jboss2  A       172.17.42.22
-jboss3  A       172.17.42.23
-jboss4  A       172.17.42.24
+wildfly1  A       172.17.42.21
+wildfly2  A       172.17.42.22
+wildfly3  A       172.17.42.23
+mysql1    A       172.17.42.41
+mysql2    A       172.17.42.42
+mysql3    A       172.17.42.43
+postgresql1    A       172.17.42.51
+postgresql2    A       172.17.42.52
+postgresql3    A       172.17.42.53
 mylap   A       172.17.42.1
 

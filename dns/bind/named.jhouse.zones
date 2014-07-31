@@ -1,4 +1,4 @@
-zone "jhouse.co.kr" IN {
+zone "jhouse.org" IN {
         type master;
         file "named.jhouse";
 };
