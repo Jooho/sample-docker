@@ -1,19 +1,19 @@
 . ./docker-env.sh
 
-echo -n "end"
-echo ""
-echo "##############################################"
-echo "# Original Install File : $OLD_FILE_NAME #"
-echo "# New Install File : $NEW_FILE_NAME #"
-echo "##############################################"
-
-echo "*Archieving scripts folder"
-tar -cvf scripts.tar ./scripts > scripts.log
-if [ $? -eq 0 ]; then
-  echo "scripts.tar is archieved successfully"
+if [ -f ./scripts.tar ] ; then
+  echo "previous script.tar will be uploaded"
 else
-  echo "Error during archiving"
+  echo "script.tar is not found"
+  echo "*Archieving scripts folder"
+  tar -cvf scripts.tar ./scripts > scripts.log
+  if [ $? -eq 0 ]; then
+    echo "scripts.tar is archieved successfully"
+  else
+    echo "Error during archiving"
+  fi  
+
 fi
+
 
 
 docker build -t $IMAGE .
