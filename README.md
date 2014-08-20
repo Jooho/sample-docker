@@ -1,7 +1,7 @@
 Sample-Docker
 =========
 
-Sample-Docker contains several common scripts & Dockerfile for an application.
+Sample-Docker contains several helper scripts & Dockerfile for an application.
 
   - DNS
   - Apache
