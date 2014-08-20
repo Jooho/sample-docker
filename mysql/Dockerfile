@@ -1,4 +1,5 @@
 FROM docker-registry:5000/rhel65-base
+MAINTAINER Jooho Lee,Jay <ljhiyh@gmail.com>
 ADD epel-release-6-8.noarch.rpm /etc/yum.repos.d/
 RUN rpm -ivh /etc/yum.repos.d/epel-release-6-8.noarch.rpm
 RUN yum update -y
