@@ -12,3 +12,4 @@ docker exec eap-master /bin/sh -c 'cd master;./start.sh' &
 docker exec eap-slave1 /bin/sh -c 'cd slave;./start.sh' &
 docker exec eap-slave2 /bin/sh -c 'cd slave;./start.sh' &
 
+./generate-info.sh

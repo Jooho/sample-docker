@@ -46,9 +46,13 @@ if [ ! -f /var/lib/mysql/ibdata1 ]; then
     echo "use mysql;"|mysql
     echo "select host, user from user;" |mysql
     echo "create database jhousedb;"|mysql
-    echo "grant select on jhousedb.* to jhouse@172.17.42.1 identified by 'redhat';" |mysql
+    echo "grant select on jhousedb.* to jhouse@172.17.42.21 identified by 'redhat';" |mysql
+    echo "grant select on jhousedb.* to jhouse@172.17.42.22 identified by 'redhat';" |mysql
+    echo "grant select on jhousedb.* to jhouse@172.17.42.23 identified by 'redhat';" |mysql
     echo "FLUSH PRIVILEGES;" | mysql
-    echo "GRANT ALL PRIVILEGES ON *.* TO 'jhouse'@'172.17.42.1' WITH GRANT OPTION;" | mysql
+    echo "GRANT ALL PRIVILEGES ON *.* TO 'jhouse'@'172.17.42.21' WITH GRANT OPTION;" | mysql
+    echo "GRANT ALL PRIVILEGES ON *.* TO 'jhouse'@'172.17.42.22' WITH GRANT OPTION;" | mysql
+    echo "GRANT ALL PRIVILEGES ON *.* TO 'jhouse'@'172.17.42.23' WITH GRANT OPTION;" | mysql
     echo "FLUSH PRIVILEGES;" | mysql
     killall mysqld
     sleep 10s

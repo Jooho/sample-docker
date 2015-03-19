@@ -38,7 +38,6 @@ done
 
 docker run \
 --name="$HOST_NAME" \
---dns="$DNS" \
 -i -t --hostname="$HOST_NAME" \
 -P -n=false \
 --lxc-conf="lxc.network.type=veth" \
