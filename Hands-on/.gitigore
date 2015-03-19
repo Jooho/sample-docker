@@ -1,0 +1,30 @@
+*.class
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+# Package Files #
+*.jar
+*.war
+*.ear
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+#Eclipse related files/folders
+.project/
+.settings/
+# Intellij related files/folders
+.idea/
+*.iml
+# Maven related files/olders
+dist/
+out/
+src/
+target/
+# Archieve files
+*.zip
+*.tar
+# jq (json parse script)
+jq
+# Development environment folder/files
+containers_info
+khan_session_dev
+# back file
+*.swp
