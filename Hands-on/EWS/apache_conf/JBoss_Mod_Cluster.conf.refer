@@ -1,0 +1,148 @@
+LoadModule slotmem_module /home/jooho/Applications/EWS/jboss-ews-2.0/httpd/modules/mod_slotmem.so
+LoadModule manager_module /home/jooho/Applications/EWS/jboss-ews-2.0/httpd/modules/mod_manager.so
+LoadModule proxy_cluster_module /home/jooho/Applications/EWS/jboss-ews-2.0/httpd/modules/mod_proxy_cluster.so
+LoadModule advertise_module /home/jooho/Applications/EWS/jboss-ews-2.0/httpd/modules/mod_advertise.so
+
+#MemManagerFile /var/cache/httpd
+Listen $IP:6666
+Listen $IP:4443
+NameVirtualHost $IP:80
+NameVirtualHost $IP:6666
+
+
+######## Mod cluster configuration for apache instance##########
+#CreateBalancers 0
+#ServerAdvertise off
+#LogLevel debug
+
+<VirtualHost $IP:6666>
+    ErrorLog "logs/cluster_log"
+    AllowDisplay On
+
+    ServerName ts1.webserver.org
+######### mod_cluster Configuration for Virtuahost #######
+    KeepAlive On
+    KeepAliveTimeout 60
+    MaxKeepAliveRequests 0
+    #AdvertiseFrequency 5
+    EnableMCPMReceive On
+    #ManagerBalancerName mycluster
+
+####### #mod_headers.so New Custom Header(CP-519303) ######
+#    Header set Test "!!!!"
+#    RequestHeader set Test "!!!!"
+
+<Location />
+   Order deny,allow
+   Allow from 172.17.0
+   Allow from redhat.com
+   deny from all
+</Location>
+
+######## mod_cluster Manager #########
+<Location /mod_cluster_manager>
+   SetHandler mod_cluster-manager
+</Location>
+
+######## server-status ############
+<Location /server-status>
+   SetHandler server-status
+   Order deny,allow
+   #allow from redhat.com   #The postfix of domain(hostname) in personal laptop should be "redhat.com"
+   allow from all
+   #deny from all
+</Location>
+
+</VirtualHost>
+
+<VirtualHost $IP:4443>
+    SSLEngine off
+
+    SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+
+    ServerName ts1.webserver1.org
+    DocumentRoot $HOME_PATH/docs/test1/a.mp4
+
+####### Error Page #######
+    ErrorDocument 503 /service_temporary_unavailable.html
+    ErrorDocument 404 "/missing.html"
+
+####### LOG ########
+    LogFormat "%h %l %u %{%d/%b/%Y %T}t.%{msec}t %{%z}t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{JSESSIONID}C\" %{COOKIE}i %{SET-COOKIE}o %T %D" custom
+    CustomLog "logs/access-mili.log" custom
+ 
+####### Rewrite rule ######
+   #RewriteEngine On
+   #RewriteBase /
+   # If the requested file doesnt exist
+   # and if the requested file is not an existing directory
+   #RewriteCond %{REQUEST_FILENAME} !-f
+   #RewriteCond %{REQUEST_FILENAME} !-d
+   #RewriteRule ^[^4]* /404 [L,S=4000]
+
+   #RewriteEngine On
+   #RewriteLog     logs/rewrite_log
+   #RewriteLogLevel 9
+   #RewriteCond %{REQUEST_FILENAME} !^(.*).(js|jpg|css|gif)$
+   #RewriteCond %{REQUEST_URI} ^/resources
+   #RewriteCond %{REQUEST_FILENAME} !-f
+   #RewriteRule ^/resources/imgs - [S=02]
+   #RewriteRule ^/.*\.(mp4|gif|jpg)$ - [S=2]
+   #RewriteRule ^/.*\.(mp4|gif|jpg)$ /resources/imgs/$1 [L]
+   #RewriteRule ^/resources/imgs/(.*\.(js|jpg|css|gif))$  /resources/imgs/$1 [L]
+   #RewriteRule ^/(.*\.(js|jpg|css|gif))$  /resources/imgs/$1 [L]
+   #RewriteRule ^/WebServices(.*) balancer://webserver1/WebServices$1 [PT,L]
+   #RewriteCond %{REQUEST_URI} !^/resources/imgs/(.*\.(js|jpg|css|gif))$
+   #RewriteRule ^/(.*) balancer://webserver2/$1 [PT,L]
+
+   #Redirect / ProxyPass Configuration.(http://wiki.kwonnam.pe.kr/apache/proxyi, http://httpd.apache.org/docs/2.2/mod/mod_proxy_balancer.html)
+   #Redirect  /FailOver.jsp https://ssl.example.com/TestSampleWar/testcase/cluster/FailOver.jsp
+   #Redirect permanent /TestSampleWar/testcase/cluster/LoadBalancer.jsp https://ssl.example.com/TestSampleWar/testcase/cluster/LoadBalancer.jsp
+   #Redirect / https://ssl.example.com/
+   #RewriteRule /TestSampleWar/testcase/cluster/FailOver.jsp https://ssl.example.com/TestSampleWar/testcase/cluster/FailOver.jsp
+   #ProxyPassMatch ^/.*\.(jsp|do|mvc)$ balancer://jhouse_balancer
+
+####### ProxyPass ######
+   #ProxyPass / http://ts1.webserver1.org/eap6 
+   #ProxyPass / http://ts1.server1.org/eap6
+   #ProxyPass /eap6 balancer://mycluster/ stickysession=JSESSIONID|jsessionid  nofailover=On
+   #ProxyPass /Test balancer://mycluster/ stickysession=JSESSIONID|jsessionid  nofailover=On
+   #ProxyPassReverse /eap6  balancer://mycluster/ 
+   #RewriteCond %{REQUEST_FILENAME} !^(.*).(js|jpg|css|gif)$
+   #ProxyPassMatch ^/.*\.(mp4|gif|jpg)$ ! 
+   #ProxyPassMatch ^/.*\.(jsp|do|mvc)$ balancer://webserver1
+
+   #ProxyPass /Webservices balancer://webserver1/ stickysession=WEBSERVICESESSIONID|jsessionid  nofailover=On
+   #ProxyPassReverse /Webservices balancer://webserver1/#    
+   #ProxyPassMatch ^/.*\.(mp4|gif|jpg)$ !
+   #ProxyPass / balancer://webserver2/ stickysession=MYSESSIONID|jsessionid  nofailover=On
+   #ProxyPassReverse / balancer://webserver2/
+
+#Apache server Status
+<Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    allow from redhat.com   #The postfix of domain(hostname) in personal laptop should be "redhat.com"
+    #deny from all
+</Location>
+
+####### Directory Access ########
+#<Location />
+#          Order deny,allow
+#          Allow from all
+#</Location>
+
+</VirtualHost>
+
+<VirtualHost $IP:80>
+   ServerName ts1.webserver2.org 
+   DocumentRoot $HOME_PATH/docs/test2
+   <Location />
+     Order deny,allow
+     Allow from all
+   </Location>
+
+    ProxyPassMatch ^/.*\.(mp4|gif|jpg)$ ! 
+</VirtualHost>
+

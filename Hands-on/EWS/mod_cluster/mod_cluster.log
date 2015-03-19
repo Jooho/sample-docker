@@ -1,0 +1,7 @@
+./
+./mod_proxy_cluster.so
+./mod_manager.so
+./mod_advertise.so
+./mod_cluster.log
+./mod_jk.so
+./mod_slotmem.so
